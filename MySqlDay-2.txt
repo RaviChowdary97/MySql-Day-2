@@ -1,0 +1,82 @@
+-- Create Users table
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    role ENUM('student', 'mentor') NOT NULL,
+    profile_picture VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Topics table
+CREATE TABLE Topics (
+    topic_id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_name VARCHAR(255) NOT NULL,
+    month VARCHAR(20) NOT NULL
+);
+
+-- Create Tasks table
+CREATE TABLE Tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    task_name VARCHAR(255) NOT NULL,
+    user_id INT,
+    submission_date DATE,
+    status ENUM('pending', 'submitted') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- Create Attendance table
+CREATE TABLE Attendance (
+    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    date DATE,
+    status ENUM('present', 'absent') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- Create CompanyDrives table
+CREATE TABLE CompanyDrives (
+    drive_id INT AUTO_INCREMENT PRIMARY KEY,
+    company_name VARCHAR(255) NOT NULL,
+    drive_date DATE
+);
+
+-- Create Mentors table
+CREATE TABLE Mentors (
+    mentor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    mentees_count INT
+);
+
+
+//inserting data into tables
+
+-- Insert data into Users table
+INSERT INTO Users (name, email, role, profile_picture)
+VALUES ('John Doe', 'john@example.com', 'student', 'profile1.jpg'),
+       ('Jane Smith', 'jane@example.com', 'mentor', 'profile2.jpg');
+
+-- Insert data into Topics table
+INSERT INTO Topics (topic_name, month)
+VALUES ('Database Management', 'October'),
+       ('Data Structures', 'October');
+
+-- Insert data into Tasks table
+INSERT INTO Tasks (task_name, user_id, submission_date, status)
+VALUES ('Task 1', 1, '2022-10-15', 'submitted'),
+       ('Task 2', 2, '2022-10-16', 'pending');
+
+-- Insert data into Attendance table
+INSERT INTO Attendance (user_id, date, status)
+VALUES (1, '2022-10-15', 'present'),
+       (2, '2022-10-15', 'absent');
+
+-- Insert data into CompanyDrives table
+INSERT INTO CompanyDrives (company_name, drive_date)
+VALUES ('ABC Inc.', '2022-10-20'),
+       ('XYZ Corp.', '2022-10-25');
+
+-- Insert data into Mentors table
+INSERT INTO Mentors (name, mentees_count)
+VALUES ('Mentor 1', 20),
+       ('Mentor 2', 15);
